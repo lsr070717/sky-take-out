@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
@@ -78,6 +79,11 @@ public class DishController {
         return Result.success(dishVO);
     }
 
+    /**
+     * 修改菜品
+     * @param dishDTO
+     * @return
+     */
     @PutMapping
     @ApiOperation("修改菜品")
     public Result update(@RequestBody DishDTO dishDTO){
@@ -85,5 +91,41 @@ public class DishController {
         dishService.updateWithFlavor(dishDTO);
         return Result.success();
     }
+
+    /**
+     * 起售停售
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("起售停售")
+    public Result startOrStop(@PathVariable Integer status, Long id){
+        log.info("起售停售：{}，{}", status, id);
+        dishService.startOrStop(status, id);
+        return Result.success();
+    }
+
+    /**
+     * 根据分类条件查询菜品列表
+     * @param categoryId
+     * @return
+     */
+
+    @GetMapping("/list")
+    @ApiOperation("根据分类条件查询菜品列表")
+    public Result<List<Dish>> listByCategoryId(String categoryId, String name){
+        if (name == null && categoryId != null){
+            log.info("根据分类条件查询菜品列表：{}", categoryId);
+            List<Dish> dishList = dishService.listByCategoryId(Long.valueOf(categoryId));
+            return Result.success(dishList);
+        }else{
+            log.info("根据名称查询菜品列表：{}", name);
+            List<Dish> dishList = dishService.listByName(name);
+            return Result.success(dishList);
+        }
+
+    }
+
 
 }

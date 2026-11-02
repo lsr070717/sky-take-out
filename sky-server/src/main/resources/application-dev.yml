@@ -11,4 +11,8 @@ sky:
     access-key-id: ${ALIYUN_ACCESS_KEY_ID}
     access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET}
     bucket-name: skyyyyyyyyy
+  redis:
+    host: 192.168.100.128
+    port: 6379
+    password: '070717'
 
