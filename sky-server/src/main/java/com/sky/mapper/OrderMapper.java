@@ -51,4 +51,12 @@ public interface OrderMapper {
 
     @Select("select * from orders where number = #{orderNumber}")
     Orders getByOrderNumber(String orderNumber);
+
+    /**
+     * 根据状态统计订单数量
+      * @param status
+     * @return
+     */
+    @Select("select count(id) from orders where status = #{status}")
+    Integer countStatus(Integer status);
 }
